@@ -1,5 +1,6 @@
 name: Deploy to Cloudflare Workers
 on:
+  workflow_dispatch:
   pull_request:
   repository_dispatch:
   push:

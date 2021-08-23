@@ -11,7 +11,7 @@ import securityTxt from './txt/security.txt'
  */
 const handleRequest = async request => {
   const { url } = request
-  if (url.includes('/.well-known/security.txt')) {
+  if (url.includes('/.well-known/security.txt') || url.endsWith('/security.txt')) {
     return new Response(securityTxt, {
       headers: { 'content-type': 'text/plain; charset=utf-8' }, // security.txt
     })

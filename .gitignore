@@ -1,6 +1,3 @@
-wrangler.toml
 dist
 node_modules
 worker
-src/txt/security.txt
-src/txt/security.txt.temp

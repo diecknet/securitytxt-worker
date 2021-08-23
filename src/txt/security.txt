@@ -1,0 +1,4 @@
+# If you find any security issues, please report them via mail
+Contact: mailto:andreas@diecknet.de
+Expires: 2022-08-22T22:00:00.000Z
+Preferred-Languages: en, de

@@ -28,13 +28,6 @@ This repository provides a simple solution to deliver a `security.txt` file usin
 
 [![Deploy with Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/diecknet/securitytxt-worker)
 
-### Add Secrets to Github Repository
-
-|Secret name|Secret value|Note|
-|---|---|---|
-|CF_ACCOUNT_ID|*Your Cloudflare Account ID*|You can find it in the Workers Dashboard|
-|CF_API_TOKEN|*Your Cloudflare API Token*|You can generate one under ['My profile' -> 'API Tokens'](https://dash.cloudflare.com/profile/api-tokens). You can use the template 'Edit Cloudflare Workers'|
-
 ### Customize your 'security.txt' file
 
 You can find a generator on [https://securitytxt.org/](https://securitytxt.org/).
@@ -54,3 +47,12 @@ Navigate to your domain in the Cloudflare dashboard, then to 'Workers'. Add desi
 
 **Replace 'example.com' with your domain.**
 If you don't want to include all subdomains, remove the leading `*` asterisk before the domain.
+
+### Note on Secrets
+
+If you manually add the secrets to your Github Repository, you might find this useful:
+
+|Secret name|Secret value|Note|
+|---|---|---|
+|CF_ACCOUNT_ID|*Your Cloudflare Account ID*|You can find it in the Workers Dashboard|
+|CF_API_TOKEN|*Your Cloudflare API Token*|You can generate one under ['My profile' -> 'API Tokens'](https://dash.cloudflare.com/profile/api-tokens). You can use the template 'Edit Cloudflare Workers'|

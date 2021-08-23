@@ -1,10 +1,10 @@
 # security.txt as a service -- Built on Cloudflare Workers
 
-This is the worker that serves [security.txt](https://securitytxt.org) on [cloudflare.com](https://cloudflare.com)
+This is the worker that serves [security.txt](https://securitytxt.org) on several sites by @diecknet.
 
 ## Background
 
-From https://securitytxt.org,
+From [https://securitytxt.org](https://securitytxt.org),
 
 ```
 When security risks in web services are discovered by independent security researchers who
@@ -14,91 +14,43 @@ organizations define the process for security researchers to disclose security v
 securely.
 ```
 
-Many reporters have difficulty finding our disclosure page (https://www.cloudflare.com/disclosure) and often submit tickets to our support staff who then inform them about our HackerOne program. The security.txt standard was submitted to the IETF to address this problem: https://tools.ietf.org/html/draft-foudil-securitytxt-08
+This repository provides a simple solution to deliver a `security.txt` file using Cloudflare Workers. It is a fork of [cloudflare/securitytxt-worker](https://github.com/cloudflare/securitytxt-worker).
 
-We wanted to open source this code to allow anyone to easily deploy security.txt onto their Cloudflare zone.
+### Changed features
+
+- use a static version of `security.txt`
+- added 'Deploy with Workers' button and instructions
+- removed `MAKE` commands and `expires.js`, that I didn't need
 
 ## Steps for deployment
 
-Deploying should take about 5 minutes or less.
+### Click 'Deploy with Workers'
 
-The `Expires` field introduced in Draft-9 is appended to the template
-automatically at a default value of 1 year after deployment.
+[![Deploy with Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/diecknet/securitytxt-worker)
 
-### Dependencies
+### Add Secrets to Github Repository
 
-**Debian based systems**
+|Secret name|Secret value|Note|
+|---|---|---|
+|CF_ACCOUNT_ID|*Your Cloudflare Account ID*|You can find it in the Workers Dashboard|
+|CF_API_TOKEN|*Your Cloudflare API Token*|You can generate one under ['My profile' -> 'API Tokens'](https://dash.cloudflare.com/profile/api-tokens). You can use the template 'Edit Cloudflare Workers'|
 
-```sh
-sudo apt-get install build-essential gnupg -y
-```
+### Customize your 'security.txt' file
 
-**macOS**
+You can find a generator on [https://securitytxt.org/](https://securitytxt.org/).
 
-Please have [homebrew](https://brew.sh/) installed.
+### Check the deployment
 
-```sh
-brew install gnupg
-```
+Wait for the deployment to finish. You can find the URL of your deployment in your Cloudflare Workers dashboard.
 
-⚠️ Additionally, this project requires [wrangler](https://github.com/cloudflare/wrangler) to be installed for builds/deploys. In turn, this means that you'll need [Node installed](https://nodejs.org/en/download/package-manager/).
+### Add Workers Routes
 
-### Publishing on your zone
+Navigate to your domain in the Cloudflare dashboard, then to 'Workers'. Add desired routes. I added both of these:
 
-#### 1. Setup wrangler
+|Route|Worker|
+|---|---|
+|*example.com/security.txt|securitytxt-worker|
+|*example.com/.well-known/security.txt|securitytxt-worker|
 
-You will need to configure wrangler.toml:
-
-```sh
-mv wrangler.toml.template wrangler.toml
-```
-
-and fill in the following values (account_id and zone_id are found on your Cloudflare zone dashboard):
-
-- account_id
-- zone_id
-- routes
-
-You will need to obtain a *scoped API* token to publish the worker.  
-You can do this at (https://dash.cloudflare.com/profile/api-tokens),
-and choose the "Edit Cloudflare Workers" template.
-We will later call the obtained token: `${TOKEN}`.
-
-
-#### 2. Setup GPG
-
-You will need to have a pre-existing GPG key in your keyring that's additionally uploaded to some public key server (tutorial here: [https://wiki.debian.org/Keysigning](https://wiki.debian.org/Keysigning)).
-
-1. Export the public key and replace the one in this repo:
-
-```sh
-mv src/txt/security-cloudflare-public-06A67236.txt src/txt/my-pub-key.txt
-gpg --export --armor your@email.com > src/txt/my-pub-key.txt
-```
-
-2. Then, update the path within the workers script to the new name of the public key file:
-
-```js
-import pubKey from './txt/my-pub-key.txt'
-
-// and later ...
-
-} else if (url.includes('/gpg/my-pub-key.txt')) {
-```
-
-3. Finally, update the email within the Makefile:
-
-```
-sign: clean
-	gpg --local-user your@email.com -o src/txt/security.txt --clearsign src/txt/security.txt.template
-```
-
-#### 3. Deploy
-
-To deploy with the token, you can choose one of the following options:
-
-a. Execute: `wrangler config`. 
-   Enter token: `${TOKEN}`. 
-   Run: `make deploy`
-
-b. Run: `CF_API_TOKEN=${token} make deploy`
+**Replace 'example.com' with your domain.**
+If you don't want to include all subdomains, remove the leading `*` asterisk before the domain.

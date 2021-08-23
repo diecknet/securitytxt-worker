@@ -1,6 +1,6 @@
 name: Deploy to Cloudflare Workers
 on:
-  pull:
+  pull_request:
   repository_dispatch:
   push:
     branches:

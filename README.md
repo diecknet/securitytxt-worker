@@ -1,6 +1,6 @@
 # security.txt as a service -- Built on Cloudflare Workers
 
-This is the worker that serves [security.txt](https://securitytxt.org) on several sites by @diecknet.
+This is the worker that serves [security.txt](https://securitytxt.org) on several of my (@diecknet) websites.
 
 ## Background
 
@@ -21,6 +21,7 @@ This repository provides a simple solution to deliver a `security.txt` file usin
 - use a static version of `security.txt`
 - added 'Deploy with Workers' button and instructions
 - removed `MAKE` commands and `expires.js`, that I didn't need
+- removed Cloudflare PGP key
 
 ## Steps for deployment
 
@@ -48,9 +49,10 @@ Navigate to your domain in the Cloudflare dashboard, then to 'Workers'. Add desi
 **Replace 'example.com' with your domain.**
 If you don't want to include all subdomains, remove the leading `*` asterisk before the domain.
 
-### Note on Secrets
+### Info about Secrets
 
-If you manually add the secrets to your Github Repository, you might find this useful:
+Usually the 'Deploy with Workers' process should guide you through setting up these secrets.
+If you need to manually add the secrets to your GitHub Repository, you might find this info useful:
 
 |Secret name|Secret value|Note|
 |---|---|---|

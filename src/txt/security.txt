@@ -1,4 +1,5 @@
 # If you find any security issues, please report them via mail
-Contact: mailto:andreas@diecknet.de
-Expires: 2022-08-22T22:00:00.000Z
+# I don't give out any bug bounties, but I appreciate every report.
+
+Contact: mailto:security@diecknet.de
 Preferred-Languages: en, de
